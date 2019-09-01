@@ -1,0 +1,18 @@
+#!/usr/bin/env php
+<?php
+
+require __DIR__.'/../vendor/autoload.php';
+
+use Symfony\Component\Console\Application;
+use App\Command\VacationDaysCalculatorCommand;
+use Symfony\Component\Yaml\Yaml;
+
+$application = new Application();
+
+$data = Yaml::parse(file_get_contents(__DIR__.'/../data/employees.yaml'));
+
+$command = new VacationDaysCalculatorCommand($data);
+
+$application->add($command);
+$application->setDefaultCommand($command->getName());
+$application->run();
